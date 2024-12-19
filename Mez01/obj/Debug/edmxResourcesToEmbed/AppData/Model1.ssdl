@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Sprav">
+    <Key>
+      <PropertyRef Name="KodAuto" />
+    </Key>
+    <Property Name="KodAuto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Marka" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ychet">
+    <Key>
+      <PropertyRef Name="NomerPost" />
+    </Key>
+    <Property Name="NomerPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KodAuto" Type="int" Nullable="false" />
+    <Property Name="FIO" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mesyacz" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KolvoAuto" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Ychet_Sprav">
+    <End Role="Sprav" Type="Self.Sprav" Multiplicity="1" />
+    <End Role="Ychet" Type="Self.Ychet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sprav">
+        <PropertyRef Name="KodAuto" />
+      </Principal>
+      <Dependent Role="Ychet">
+        <PropertyRef Name="KodAuto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TestModelContainer">
+    <EntitySet Name="Sprav" EntityType="Self.Sprav" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ychet" EntityType="Self.Ychet" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Ychet_Sprav" Association="Self.FK_Ychet_Sprav">
+      <End Role="Sprav" EntitySet="Sprav" />
+      <End Role="Ychet" EntitySet="Ychet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

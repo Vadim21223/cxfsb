@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Sprav">
+    <Key>
+      <PropertyRef Name="KodAuto" />
+    </Key>
+    <Property Name="KodAuto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ychet" Relationship="Self.FK_Ychet_Sprav" FromRole="Sprav" ToRole="Ychet" />
+  </EntityType>
+  <EntityType Name="Ychet">
+    <Key>
+      <PropertyRef Name="NomerPost" />
+    </Key>
+    <Property Name="NomerPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KodAuto" Type="Int32" Nullable="false" />
+    <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Mesyacz" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KolvoAuto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sprav" Relationship="Self.FK_Ychet_Sprav" FromRole="Ychet" ToRole="Sprav" />
+  </EntityType>
+  <Association Name="FK_Ychet_Sprav">
+    <End Role="Sprav" Type="Self.Sprav" Multiplicity="1" />
+    <End Role="Ychet" Type="Self.Ychet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sprav">
+        <PropertyRef Name="KodAuto" />
+      </Principal>
+      <Dependent Role="Ychet">
+        <PropertyRef Name="KodAuto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Sprav" EntityType="Self.Sprav" />
+    <EntitySet Name="Ychet" EntityType="Self.Ychet" />
+    <AssociationSet Name="FK_Ychet_Sprav" Association="Self.FK_Ychet_Sprav">
+      <End Role="Sprav" EntitySet="Sprav" />
+      <End Role="Ychet" EntitySet="Ychet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
